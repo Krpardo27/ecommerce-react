@@ -1,130 +1,136 @@
-import { useEffect, useCallback, useState } from "react";
-import useEmblaCarousel from "embla-carousel-react";
+import React from "react";
 import { FaChevronCircleLeft, FaChevronCircleRight } from "react-icons/fa";
+import Slider from "react-slick";
 
-const productos = [
+const slides = [
   {
-    id: 1,
-    nombre: "Silla Moderna",
-    imagen: "/home/hero/carrusel-1.jpg",
+    title: "Bienvenido a Nuestra Web",
+    subtitle:
+      "Descubre nuestros servicios premium y lleva tu negocio al siguiente nivel.",
+    // bgClass: "bg-gradient-to-r from-blue-700 via-blue-900 to-black",
+    btnColor: "text-blue-900",
+    btnHover: "hover:bg-gray-200",
+    btnText: "Comenzar Ahora",
+    src: "/trabajos/oficina.jpeg",
   },
   {
-    id: 2,
-    nombre: "Sofá Elegante",
-    imagen: "/home/hero/carrusel-2.jpg",
+    title: "Diseño Innovador",
+    subtitle: "Creamos experiencias digitales únicas para tu audiencia.",
+    bgClass: "bg-gradient-to-r from-green-700 via-green-900 to-black",
+    btnColor: "text-green-900",
+    btnHover: "hover:bg-gray-200",
+    btnText: "Ver Proyectos",
+    src: "/trabajos/oficina.jpeg",
   },
   {
-    id: 3,
-    nombre: "Mesa de Comedor",
-    imagen: "/home/hero/carrusel-3.jpg",
-  },
-  {
-    id: 4,
-    nombre: "Estantería Minimalista",
-    imagen: "/home/hero/carrusel-4.jpg",
+    title: "Soporte 24/7",
+    subtitle: "Estamos aquí para ayudarte en cualquier momento.",
+    bgClass: "bg-gradient-to-r from-red-700 via-red-900 to-black",
+    btnColor: "text-red-900",
+    btnHover: "hover:bg-gray-200",
+    btnText: "Contactar Ahora",
+    src: "/trabajos/oficina.jpeg",
   },
 ];
 
-export default function CarruselFullEmbla() {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "start",
-    skipSnaps: false,
-  });
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollTo = useCallback(
-    (index) => {
-      if (emblaApi) emblaApi.scrollTo(index);
-    },
-    [emblaApi]
-  );
-
-  useEffect(() => {
-    if (!emblaApi) return;
-
-    setScrollSnaps(emblaApi.scrollSnapList());
-
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-
-    emblaApi.on("select", onSelect);
-    onSelect();
-
-    return () => {
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi]);
-
-  useEffect(() => {
-    if (!emblaApi) return;
-    const autoplay = setInterval(() => {
-      emblaApi.scrollNext();
-    }, 3000);
-    return () => clearInterval(autoplay);
-  }, [emblaApi]);
-
+function SampleNextArrow({ className, onClick }) {
   return (
     <div
-      className="relative w-full overflow-hidden"
-      ref={emblaRef}
-      style={{ maxHeight: "600px" }}
+      className={`${className} absolute top-0 right-10 z-10`}
+      onClick={onClick}
     >
-      <div className="flex select-none touch-pan-y">
-        {productos.map((p) => (
-          <div key={p.id} className="min-w-full flex-shrink-0 relative">
-            <img
-              src={p.imagen}
-              alt={p.nombre}
-              className="w-full h-[600px] object-cover bg-center bg-no-repeat bg-cover" 
-            />
-            <div className="absolute bottom-10 left-10 text-white text-3xl font-bold drop-shadow-lg pointer-events-none">
-              {p.nombre}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Botones navegación */}
-      <button
-        onClick={scrollPrev}
-        className="absolute p-4 top-1/2 left-4 -translate-y-1/2 z-20 bg-white bg-opacity-70 rounded-full  shadow hover:bg-opacity-90 transition"
-        aria-label="Anterior"
-      >
-        <FaChevronCircleLeft className="bg-red-400 w-full" />
-      </button>
-      <button
-        onClick={scrollNext}
-        className="absolute p-4 top-1/2 right-4 -translate-y-1/2 z-20 bg-white bg-opacity-70 rounded-full  shadow hover:bg-opacity-90 transition"
-        aria-label="Siguiente"
-      >
-        <FaChevronCircleRight className="text-3xl w-full" />
-      </button>
-
-      {/* Dots de paginación */}
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
-        {scrollSnaps.map((_, index) => (
-          <button
-            key={index}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === selectedIndex ? "bg-white" : "bg-white/50"
-            }`}
-            onClick={() => scrollTo(index)}
-            aria-label={`Ir al slide ${index + 1}`}
-          />
-        ))}
-      </div>
+      <FaChevronCircleRight className="text-4xl text-black drop-shadow-lg hover:text-gray-300 transition" />
     </div>
   );
 }
+
+function SamplePrevArrow({ className, onClick }) {
+  return (
+    <div className={`${className} left-5 z-10`} onClick={onClick}>
+      <FaChevronCircleLeft className="text-3xl text-black drop-shadow-lg hover:text-gray-300 transition" />
+    </div>
+  );
+}
+
+// Desestructuramos los primeros 2 slides y el resto
+const [firstSlide, secondSlide, ...restSlides] = slides;
+
+const Carousel = () => {
+  const settings = {
+    dots: true,
+    fade: true,
+    lazyLoad: true,
+    infinite: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    appendDots: (dots) => (
+      <div
+        style={{
+          borderRadius: "100px",
+          padding: "40px",
+          position: "absolute",
+          bottom: "-40px",
+        }}
+      >
+        <ul style={{ margin: "0px" }}> {dots} </ul>
+      </div>
+    ),
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          arrows: false,
+          dots: true,
+        },
+      },
+    ],
+  };
+
+  // Aquí puedes decidir usar solo los primeros dos o todos juntos
+  const slidesToShow = [firstSlide, secondSlide, ...restSlides];
+
+  return (
+    <div className="w-full my-6 slider-container">
+      <Slider {...settings}>
+        {slidesToShow.map(
+          (
+            {
+              title,
+              subtitle,
+              bgClass,
+              btnColor,
+              btnBg,
+              btnHover,
+              btnText,
+              src,
+            },
+            i
+          ) => (
+            <div key={i}>
+              <div className="lg:h-[600px] h-[350px] w-full bg-cover bg-center flex flex-col items-center justify-center">
+                {/* <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-4 drop-shadow-lg">
+                  {title}
+                </h1>
+                <p className="text-base sm:text-lg md:text-2xl text-gray-300 max-w-xl mb-8 drop-shadow-md">
+                  {subtitle}
+                </p>
+                <button
+                  className={`${btnBg} ${btnColor} font-semibold py-3 px-8 rounded-md ${btnHover} transition`}
+                >
+                  {btnText}
+                </button> */}
+                <img src={src} alt="" className="w-full h-full object-cover" />
+              </div>
+            </div>
+          )
+        )}
+      </Slider>
+    </div>
+  );
+};
+
+export default Carousel;
