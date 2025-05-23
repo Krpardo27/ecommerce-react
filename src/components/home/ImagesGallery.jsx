@@ -75,13 +75,13 @@ export default function ImagesGallery() {
   const [index, setIndex] = useState(-1);
 
   return (
-    <div className="lg:p-6 p-2 max-w-7xl mx-auto">
-      <h2 className="text-3xl font-bold mb-8 text-center">
+    <div className="max-w-7xl mx-auto lg:px-4 p-2 my-5">
+      <h2 className="text-4xl md:text-5xl font-semibold text-gray-800 mb-10 tracking-tight leading-tight lg:px-4 p-2">
         Galería de Trabajos
       </h2>
 
       {/* Masonry columns: 1 col mobile, 2 sm, 3 lg */}
-      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 lg:px-4 p-2">
         {images.map((image, i) => (
           <div
             key={image.id}

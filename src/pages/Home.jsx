@@ -6,10 +6,8 @@ const Home = () => {
   return (
     <section>
       <CarruselProductos />
-     
-        <Categorias />
-        <ImagesGallery />
-      
+      {/* <Categorias /> */}
+      <ImagesGallery />
     </section>
   );
 };
