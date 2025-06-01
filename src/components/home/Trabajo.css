@@ -1,0 +1,60 @@
+/* Estilos base */
+.trabajos-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.trabajos-title {
+  text-align: center;
+  font-size: 2.25rem;
+  margin-bottom: 2.5rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+/* Contenedor del álbum */
+.photo-album-wrapper {
+  margin: 0 auto;
+}
+
+/* Estilos para las fotos */
+.react-photo-album--photo {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.react-photo-album--photo:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.react-photo-album--photo img {
+  transition: transform 0.3s ease !important;
+}
+
+/* Lightbox personalizado */
+.yarl__container {
+  --yarl__color_backdrop: rgba(0, 0, 0, 0.92);
+}
+
+.yarl__slide_title {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-top: 1rem;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .trabajos-title {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .photo-album-wrapper {
+    padding: 0 0.5rem;
+  }
+}
