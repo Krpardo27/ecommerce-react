@@ -1,6 +1,10 @@
 import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import gsap from "gsap";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import productos from "../../data/productos";
+
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -8,10 +12,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "swiper/css/effect-fade";
 
-import gsap from "gsap";
-
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import productos from "../../data/productos";
+import "./styles.css";
 
 const Carousel = () => {
   const slideRefs = useRef([]);
@@ -54,14 +55,16 @@ const Carousel = () => {
   }, []);
 
   return (
-    <div className="w-full container mx-auto lg:px-4 p-2 my-12">
+    <div className="w-full container mx-auto lg:p-0 p-2 my-8">
       <Swiper
         modules={[Navigation, Pagination, Autoplay, EffectFade]}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         slidesPerView={1}
+        loop={true}
+        className="relative"
         autoplay={{ delay: 3000 }}
-        pagination={{ clickable: true }}
+        pagination={{ clickable: true, ynamicBullets: true }}
         navigation={{
           nextEl: ".custom-next",
           prevEl: ".custom-prev",
@@ -82,7 +85,7 @@ const Carousel = () => {
               <img
                 src={producto.imagen}
                 alt={producto.nombre}
-                className="w-full lg:h-[600px] h-[300px] object-cover rounded-md mb-2"
+                className="w-full lg:h-[600px] h-[300px] object-cover"
               />
               {/* <h3 className="text-lg font-semibold">{producto.nombre}</h3>
               <p className="text-blue-600 font-bold">{producto.precio}</p> */}
@@ -90,10 +93,10 @@ const Carousel = () => {
           </SwiperSlide>
         ))}
         <div className="custom-prev absolute left-0 top-1/2 z-10 -translate-y-1/2 p-2 bg-white rounded-full shadow cursor-pointer">
-          <FaChevronLeft className="text-blue-600 text-xl" />
+          <FaChevronLeft className="text-xl" />
         </div>
         <div className="custom-next absolute right-0 top-1/2 z-10 -translate-y-1/2 p-2 bg-white rounded-full shadow cursor-pointer">
-          <FaChevronRight className="text-blue-600 text-xl" />
+          <FaChevronRight className="text-xl" />
         </div>
       </Swiper>
     </div>
